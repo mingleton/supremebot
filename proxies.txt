@@ -1,0 +1,2 @@
+ip:port <<= if ip authenticated
+http://username:password@ip:port <<= if username/password authentication
