@@ -21,7 +21,7 @@ if __name__ == '__main__':
     # enter color for release mode else leave blank
     color = 'rose'
     # enter size for desired size else leave blank for O/S or random
-    size = ''
+    size = 'L'
     # Enter checkout delay to avoit ghost checkout or else enter None
     checkoutDelay = None
     
