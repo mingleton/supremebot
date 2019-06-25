@@ -61,7 +61,7 @@ class Supreme(object) :
     def search(self):
         def checkMatch(url):
             try: 
-                r= requests.get(url, headers=self.headers, proxies={'http': random.choice(self.proxies)} if self.proxies else None)
+                r= requests.get(url, headers=self.headers, proxies={'https': random.choice(self.proxies)} if self.proxies else None)
                 tree = etree.HTML(r.content)
                 return tree.xpath('/html/head/title')[0].text, url
             except Exception as e:
@@ -71,19 +71,24 @@ class Supreme(object) :
         while True:
             try:
                 print(datetime.datetime.now().strftime('%x %X'), 'Searching')
-                r = requests.get('http://www.supremenewyork.com/shop/all/{}'.format(self.category), headers=self.headers,
-                                proxies={'http': random.choice(self.proxies)} if self.proxies else None)
+                r = requests.get('https://www.supremenewyork.com/shop/all/{}'.format(self.category), headers=self.headers,
+                                proxies={'https': random.choice(self.proxies)} if self.proxies else None)
                 tree= etree.HTML(r.content)
                 if not self.urls:
-                    for products in tree.xpath('//*[@id="container"]/article/div/a'):
-                        self.urls.append('http://www.supremenewyork.com'+products.get('href'))
+                    print('not self.url')
+                    print(tree.xpath('//*[@id="container"]'))
+                    for products in tree.xpath('//*[@id="container"]'):
+                        print('tree.xpath')
+                        self.urls.append('https://www.supremenewyork.com'+products.get('href'))
                     print(self.urls)
                 else:
+                    print('else')
                     with cf.ThreadPoolExecutor() as pool:
+                        print('threadpool')
                         futures = []
                         for products in tree.xpath('//*[@id="container"]/article/div/a'):
-                            if 'http://www.supremenewyork.com'+products.get('href') not in self.urls:
-                                futures.append(pool.submit(checkMatch, 'http://www.supremenewyork.com'+products.get('href')))
+                            if 'https://www.supremenewyork.com'+products.get('href') not in self.urls:
+                                futures.append(pool.submit(checkMatch, 'https://www.supremenewyork.com'+products.get('href')))
                         if futures:
                             for x in futures:
                                 if x.result():
@@ -97,7 +102,7 @@ class Supreme(object) :
         while True:
             try:
                 print(datetime.datetime.now().strftime('%x %X'), 'Waiting for restock')
-                r = requests.get(url, headers=self.headers, proxies={'http': random.choice(self.proxies)} if self.proxies else None)
+                r = requests.get(url, headers=self.headers, proxies={'https': random.choice(self.proxies)} if self.proxies else None)
                 tree = etree.HTML(r.content)
                 if tree.xpath('//*[@id="add-remove-buttons"]/input'):
                     avlSz = [sizes for sizes in tree.xpath('//*[@id="s"]/option/text()')] if tree.xpath('//*[@id="s"]/option/text()') else ['N/A']
@@ -130,7 +135,7 @@ class Supreme(object) :
     def checkOut(self):
         print(datetime.datetime.now().strftime('%x %X'), 'Beggining checkout')
         try:
-            self.driver.get('https://www.supremenewyork.com/checkout')
+            self.driver.get('httpss://www.supremenewyork.com/checkout')
             self.driver.find_element_by_name('order[billing_name]').send_keys(self.name)
             self.driver.find_element_by_name('order[email]').send_keys(self.email)
             self.driver.find_element_by_name('order[tel]').click()

@@ -14,14 +14,14 @@ def main(category, name, color, size, checkoutDelay, url):
 if __name__ == '__main__':
     # enter R for restock mode else leave blank
     releaseType = ''.upper()
-    # enter category for release mode lese leave blank
-    category = 'jackets'
+    # enter category for release mode else leave blank
+    category = 'Jacket'
     # enter name for release mode else leave blank
-    name = 'parka'
+    name = ''
     # enter color for release mode else leave blank
-    color = 'rose'
+    color = 'Royal'
     # enter size for desired size else leave blank for O/S or random
-    size = 'L'
+    size = 'Medium'
     # Enter checkout delay to avoit ghost checkout or else enter None
     checkoutDelay = None
     
