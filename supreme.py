@@ -29,7 +29,7 @@ class Supreme(object) :
         options = webdriver.ChromeOptions()
         options.add_argument('disable-infobars')
         options.add_argument('--disable-extensions')
-        # options.add_argument('--headless')
+        options.add_argument('--headless')
         options.add_argument('--disable-gpu')
         options.add_argument('--no-sandbox')
 
@@ -75,10 +75,10 @@ class Supreme(object) :
                                 proxies={'https': random.choice(self.proxies)} if self.proxies else None)
                 tree= etree.HTML(r.content)
                 if not self.urls:
-                    print('not self.url')
+                    #print('not self.url')
                     print(tree.xpath('//*[@id="container"]'))
                     for products in tree.xpath('//*[@id="container"]'):
-                        print('tree.xpath')
+                        #print('tree.xpath')
                         self.urls.append('https://www.supremenewyork.com'+products.get('href'))
                     print(self.urls)
                 else:
